@@ -5,9 +5,9 @@ Slider displays markdown files as a series of slides in the web browser. Any sec
 
 ```markdown
 A Slide Name
-&#61;&#61;&#61;
+===
 ```
-is considered the start of a section.
+is considered the start of a section. 
 
 Installation
 ===
