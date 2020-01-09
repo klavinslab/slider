@@ -16,6 +16,7 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-react-app": "^9.1.0",
     "github-markdown-css": "^3.0.1",
+    "js-cookie": "^2.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "showdown": "^1.9.1"

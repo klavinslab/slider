@@ -30,15 +30,22 @@ class Slider extends React.Component {
 
   constructor(props) {
     super(props);
+
+    let slide = parseInt(Cookies.get("slide"));
+    if (!slide) {
+      slide = 0;
+    }
+
     this.state = {
       error: null,
       isLoaded: false,
       items: [],
-      slide: 0,
+      slide: slide,
       fullscreen: false
     };
     this.forward = this.forward.bind(this);
     this.reverse = this.reverse.bind(this);
+    this.go = this.go.bind(this);
     this.fullscreen = this.fullscreen.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
@@ -62,14 +69,22 @@ class Slider extends React.Component {
 
   forward() {
     if (this.state.slide < this.state.slides.length - 1) {
+      Cookies.set("slide", this.state.slide + 1);
       this.setState({ slide: this.state.slide + 1 });
     }
   }
 
   reverse() {
     if (this.state.slide > 0) {
+      Cookies.set("slide", this.state.slide - 1);
       this.setState({ slide: this.state.slide - 1 });
     }
+  }
+
+  go(n) {
+    console.log(n);
+    Cookies.set("slide", n);
+    this.setState({ slide: n });
   }
 
   fullscreen() {
@@ -112,7 +127,7 @@ class Slider extends React.Component {
         "div",
         { key: i,
           onClick: () => {
-            console.log(i);this.setState({ slide: i });
+            this.go(i);
           },
           className: classes },
         t
