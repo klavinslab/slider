@@ -1,0 +1,85 @@
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+#main {
+    outline: none;
+}
+
+.slider-container {
+    outline: none;
+}
+
+.slide-index {
+    width: 10%;
+    height: 100vh;
+    float: left;
+    padding-left: 5px;
+    margin: 0px 0px 10px 0px;
+    overflow-y: scroll;
+    direction: rtl;
+}
+
+.slides-container {
+    margin-left: 10%;
+    border: none;
+}
+
+.slide { 
+    padding: 10px;
+    margin: 4px;
+    display: none;
+}
+
+.active-slide {
+    display: block;
+}
+
+.active-title {
+    background: white !important;
+    border: 1pt solid black !important;
+    color: black !important;
+}
+
+#forward {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+#reverse {
+    position: fixed;
+    right: 50px;
+    bottom: 20px;
+    cursor: pointer;
+    outline: none;
+}
+
+#expand {
+    position: fixed;
+    right: 80px;
+    bottom: 20px;
+    cursor: pointer;
+    outline: none;    
+}
+
+.title {
+    font-size: 8pt;
+    border: 1pt solid #ddd;
+    margin: 5px;
+    border-radius: 3px;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #efefef;
+    color: #aaa;
+    cursor: pointer;
+    text-align: left;
+}
+
+.title:hover {
+    color: black;
+    border: 1pt solid #555;
+}
