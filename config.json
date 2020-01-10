@@ -1,0 +1,6 @@
+{
+    "slide_decks": [
+        { "path": "/course/week_1/README.md", "title": "Build Environment" },
+        { "path": "/course/week_2/README.md", "title": "The C Language" }
+    ]
+}

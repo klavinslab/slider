@@ -20,8 +20,10 @@ Installation
 
 Todo
 ===
+- Fix annoying scroll issues
+- Automatically center current slide in sidebar?
 - Make a config file with a list of markdown files to serve as slides, and an index page that allows you to swtich among them.
+- Collapse index sidebar
 - Make this whole thing easier to install and use.
-- Use cookies to remember what page you were looking at.
 - Add screen backgrounds, styles, etc.
 

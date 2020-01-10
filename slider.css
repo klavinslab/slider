@@ -1,6 +1,7 @@
 body {
     margin: 0px;
     padding: 0px;
+    background-image: linear-gradient(to left,#eeeeff, white);
 }
 
 #main {
@@ -11,14 +12,13 @@ body {
     outline: none;
 }
 
-.slide-index {
+.sidebar {
     width: 10%;
     height: 100vh;
     float: left;
-    padding-left: 5px;
+    padding: 5px 0 0 5px;
     margin: 0px 0px 10px 0px;
     overflow-y: scroll;
-    direction: rtl;
 }
 
 .slides-container {
@@ -37,12 +37,12 @@ body {
 }
 
 .active-title {
-    background: white !important;
     border: 1pt solid black !important;
     color: black !important;
+    background-image: linear-gradient(to top,#eeeeff, white) !important;;
 }
 
-#forward {
+#forward-button {
     position: fixed;
     right: 20px;
     bottom: 20px;
@@ -50,7 +50,7 @@ body {
     outline: none;
 }
 
-#reverse {
+#reverse-button {
     position: fixed;
     right: 50px;
     bottom: 20px;
@@ -58,12 +58,24 @@ body {
     outline: none;
 }
 
-#expand {
+#expand-button {
     position: fixed;
     right: 80px;
     bottom: 20px;
     cursor: pointer;
     outline: none;    
+}
+
+#sidebar-title {
+    cursor: pointer;
+    margin: 5px;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #888;
+}
+
+#sidebar-title:hover {
+    color:#555;
 }
 
 .title {
@@ -73,13 +85,26 @@ body {
     border-radius: 3px;
     padding: 5px;
     font-family: Arial, Helvetica, sans-serif;
-    background: #efefef;
+    background-image: linear-gradient(to top ,#eee, white);
     color: #aaa;
     cursor: pointer;
     text-align: left;
 }
 
 .title:hover {
-    color: black;
-    border: 1pt solid #555;
+    color: #444;
+    border: 1pt solid #888;
+}
+
+.deck {
+    font-size: 8pt;
+    margin: 5px;
+    padding: 5px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    text-align: left;
+}
+
+.active-deck {
+    font-weight: bold;
 }
