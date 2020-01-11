@@ -127,7 +127,7 @@ class Slider extends React.Component {
     }
   }
 
-  make_slide_divs(slides) {
+  slide_divs(slides) {
     return slides.flatMap((s, i) => {
       let classes = "markdown-body slide";
       if (this.state.slide == i) {
@@ -139,7 +139,7 @@ class Slider extends React.Component {
     });
   }
 
-  make_title_divs(slides) {
+  title_divs(slides) {
     let titles = slides.map(s => s.split("===")[0]);
     return titles.flatMap((t, i) => {
       let classes = "title";
@@ -158,7 +158,7 @@ class Slider extends React.Component {
     });
   }
 
-  make_deck_divs() {
+  deck_divs() {
     return this.config.slide_decks.flatMap((d, i) => {
       let classes = "deck";
       if (this.state.deck == i) {
@@ -182,7 +182,7 @@ class Slider extends React.Component {
     });
   }
 
-  make_buttons() {
+  buttons() {
     return React.createElement(
       "div",
       null,
@@ -205,26 +205,25 @@ class Slider extends React.Component {
         { id: "expand-button",
           onClick: this.fullscreen },
         "\u25F3"
+      ),
+      React.createElement(
+        "button",
+        { id: "sidebar-button",
+          onClick: () => {
+            if (this.state.sidebar == "decks") {
+              this.setState({ sidebar: "slides" });
+              Cookies.set("sidebar", "slides");
+            } else {
+              this.setState({ sidebar: "decks" });
+              Cookies.set("sidebar", "decks");
+            }
+          } },
+        this.state.sidebar != "decks" ? "Decks" : "Slides"
       )
     );
   }
 
-  make_sidebar_title() {
-    return React.createElement(
-      "div",
-      { id: "sidebar-title",
-        onClick: () => {
-          if (this.state.sidebar == "decks") {
-            this.setState({ sidebar: "slides" });
-            Cookies.set("sidebar", "slides");
-          } else {
-            this.setState({ sidebar: "decks" });
-            Cookies.set("sidebar", "decks");
-          }
-        } },
-      this.state.sidebar == "decks" ? "Decks" : "Slides"
-    );
-  }
+  make_sidebar_title() {}
 
   render() {
     const { error, isLoaded, slides } = this.state;
@@ -242,9 +241,6 @@ class Slider extends React.Component {
         "Loading..."
       );
     } else {
-      const slide_divs = this.make_slide_divs(slides);
-      const title_divs = this.make_title_divs(slides);
-      const deck_divs = this.make_deck_divs();
       let sidebar = "";
       let sidebar_title = this.make_sidebar_title();
       if (this.state.sidebar == "slides") {
@@ -252,17 +248,16 @@ class Slider extends React.Component {
           "div",
           { className: "sidebar" },
           sidebar_title,
-          title_divs
+          this.title_divs(slides)
         );
       } else {
         sidebar = React.createElement(
           "div",
           { className: "sidebar" },
           sidebar_title,
-          deck_divs
+          this.deck_divs()
         );
       }
-      let buttons = this.make_buttons();
       return React.createElement(
         "div",
         { tabIndex: "0", onKeyDown: this.handleKeyDown, className: "slider-container" },
@@ -270,17 +265,40 @@ class Slider extends React.Component {
         React.createElement(
           "div",
           { className: "slides-container" },
-          slide_divs,
-          buttons
+          this.slide_divs(slides),
+          this.buttons()
         )
       );
     }
   }
 
   componentDidUpdate() {
+
     document.querySelectorAll('pre code').forEach(block => {
       hljs.highlightBlock(block);
     });
+
+    if (this.state.sidebar == "slides") {
+
+      let sidebar = document.querySelectorAll('.sidebar')[0];
+      let active_title = document.querySelectorAll('.active-title')[0];
+      let initial = sidebar.scrollTop;
+      let target = Math.max(active_title.offsetTop - sidebar.clientHeight / 2, 0);
+      let current = initial;
+      let t = 0,
+          T = 1 * Math.abs(target - initial);
+
+      var scroll_animation = setInterval(() => {
+        let p = t / T;
+        current = p * target + (1 - p) * initial;
+        sidebar.scrollTo(0, current);
+        t += 1;
+        if (t >= T) {
+          clearInterval(scroll_animation);
+          sidebar.scrollTo(0, target);
+        }
+      }, 1);
+    }
   }
 
 }

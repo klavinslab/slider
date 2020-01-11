@@ -2,28 +2,44 @@ body {
     margin: 0px;
     padding: 0px;
     background-image: linear-gradient(to left,#eeeeff, white);
+    height: 100vh;
+    overflow-y: hidden;    
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 #main {
     outline: none;
+    margin: 0px;
+    padding: 0px;    
+    height: 100vh;
+    overflow-y: hidden;    
 }
 
 .slider-container {
+    margin: 0px;
+    padding: 0px;    
     outline: none;
+    height: 100vh;
+    overflow-y: hidden;
 }
 
 .sidebar {
     width: 10%;
     height: 100vh;
     float: left;
-    padding: 5px 0 0 5px;
-    margin: 0px 0px 10px 0px;
+    padding: 5px;
+    margin: 0;
     overflow-y: scroll;
 }
 
 .slides-container {
-    margin-left: 10%;
+    margin-left: 0 0 0 10%;
     border: none;
+    overflow-y: scroll;
+    height: 100vh;
 }
 
 .slide { 
@@ -66,10 +82,12 @@ body {
     outline: none;    
 }
 
-#sidebar-title {
+#sidebar-button {
+    position: fixed;
+    right: 110px;
+    bottom: 20px;
     cursor: pointer;
-    margin: 5px;
-    padding: 5px;
+    outline: none;  
     font-family: Arial, Helvetica, sans-serif;
     color: #888;
 }
@@ -94,6 +112,10 @@ body {
 .title:hover {
     color: #444;
     border: 1pt solid #888;
+}
+
+.title:last-child {
+    margin-bottom: 15px;
 }
 
 .deck {

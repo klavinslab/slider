@@ -92,7 +92,6 @@ class Slider extends React.Component {
         if (this.state.slide < this.state.slides.length - 1 ) {
             Cookies.set("slide", this.state.slide+1)
             this.setState({slide: this.state.slide+1});
-            
         }
     }
 
@@ -100,13 +99,12 @@ class Slider extends React.Component {
         if ( this.state.slide > 0 ) {
             Cookies.set("slide", this.state.slide-1)
             this.setState({slide: this.state.slide-1});
-            
         }
     }
 
     go(n) {
         Cookies.set("slide", n)
-        this.setState({slide: n});      
+        this.setState({slide: n});  
     } 
 
     switch_deck(n) {
@@ -134,7 +132,7 @@ class Slider extends React.Component {
       }
     }
 
-    make_slide_divs(slides) {
+    slide_divs(slides) {
       return slides.flatMap((s,i) => {
           let classes = "markdown-body slide";
           if ( this.state.slide == i ) {
@@ -146,12 +144,12 @@ class Slider extends React.Component {
       });
     }
 
-    make_title_divs(slides) {
+    title_divs(slides) {
       let titles = slides.map(s => s.split("===")[0]);
       return titles.flatMap((t,i) => { 
           let classes = "title";
           if ( this.state.slide == i ) {
-            classes += " active-title";
+              classes += " active-title";
           }
           return <div key={i} 
                       onClick={() => { this.go(i) } }
@@ -159,7 +157,7 @@ class Slider extends React.Component {
       });
     }
 
-    make_deck_divs() {   
+    deck_divs() {   
         return this.config.slide_decks.flatMap((d,i) => {
             let classes = "deck";
             if ( this.state.deck == i ) {
@@ -171,7 +169,7 @@ class Slider extends React.Component {
         });
     }
   
-    make_buttons() {
+    buttons() {
       return <div>
         <button id="forward-button" 
                 onClick={this.forward} 
@@ -183,12 +181,8 @@ class Slider extends React.Component {
                 &#9664;</button>
         <button id="expand-button" 
                 onClick={this.fullscreen}>
-                &#9715;</button>              
-      </div>     
-    }
-
-    make_sidebar_title() {
-      return <div id="sidebar-title" 
+                &#9715;</button>    
+        <button id="sidebar-button"
                      onClick={() => {
                         if ( this.state.sidebar == "decks" ) {
                           this.setState({sidebar: "slides"});
@@ -198,8 +192,13 @@ class Slider extends React.Component {
                           Cookies.set("sidebar", "decks");
                         }
                      }}>
-          {this.state.sidebar == "decks" ? "Decks" : "Slides"}
-      </div>   
+          {this.state.sidebar != "decks" ? "Decks" : "Slides"}
+       </button>   
+      </div>     
+    }
+
+    make_sidebar_title() {
+
     }
 
     render() {
@@ -209,23 +208,19 @@ class Slider extends React.Component {
       } else if (!isLoaded) {
         return <div>Loading...</div>;
       } else {
-        const slide_divs = this.make_slide_divs(slides);
-        const title_divs = this.make_title_divs(slides);
-        const deck_divs = this.make_deck_divs();
         let sidebar = "";
         let sidebar_title = this.make_sidebar_title();
         if ( this.state.sidebar == "slides" ) {
-            sidebar = <div className="sidebar">{sidebar_title}{title_divs}</div> 
+            sidebar = <div className="sidebar">{sidebar_title}{this.title_divs(slides)}</div> 
         } else {
-            sidebar = <div className="sidebar">{sidebar_title}{deck_divs}</div> 
+            sidebar = <div className="sidebar">{sidebar_title}{this.deck_divs()}</div> 
         }
-        let buttons = this.make_buttons();
         return (
           <div tabIndex="0" onKeyDown={this.handleKeyDown} className="slider-container">
             {sidebar}         
             <div className="slides-container">
-              {slide_divs}
-              {buttons}
+              {this.slide_divs(slides)}
+              {this.buttons()}
             </div>
           </div>
         );
@@ -233,9 +228,33 @@ class Slider extends React.Component {
     }
 
     componentDidUpdate() {
+
       document.querySelectorAll('pre code').forEach((block) => {
         hljs.highlightBlock(block);
-      });  
+      });
+
+      if ( this.state.sidebar == "slides" ) {
+
+        let sidebar = document.querySelectorAll('.sidebar')[0];
+        let active_title = document.querySelectorAll('.active-title')[0];
+        let initial = sidebar.scrollTop;
+        let target = Math.max(active_title.offsetTop - sidebar.clientHeight/2,0);
+        let current = initial;
+        let t = 0, T = 1*Math.abs(target - initial);
+        
+        var scroll_animation = setInterval(() => {
+            let p = t / T;
+            current = p * target + (1-p)*initial;
+            sidebar.scrollTo(0,current);
+            t += 1;
+            if ( t >= T ) {
+              clearInterval(scroll_animation);
+              sidebar.scrollTo(0,target);
+            }
+        }, 1);
+
+      }
+
     }
 
   }

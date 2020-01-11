@@ -15,15 +15,19 @@ Installation
 - Clone this repository.
 - `npm intsall`
 - For now, edit slider.js with the URL of the markdown page you want to display as slides.
+- Make a file called `config.json` with something like the following in it:
+    ```json
+    {
+        "slide_decks": [
+            { "path": "https://mysite.com/courses/week_1/README.md", "title": "Build Environment" },
+            { "path": "https://mysite.com/courses/week_2/README.md", "title": "The C Language" }
+        ]
+    }
+    ```
 - Navigate to index.html in the repository with your browser.
 - You might also want to serve the web page properly and put your markdown files within the directory being served. That way the AJAX request that Slider makes with not give you a CORS error.
 
 Todo
 ===
-- Fix annoying scroll issues
-- Automatically center current slide in sidebar?
-- Make a config file with a list of markdown files to serve as slides, and an index page that allows you to swtich among them.
-- Collapse index sidebar
+- More configurability
 - Make this whole thing easier to install and use.
-- Add screen backgrounds, styles, etc.
-
