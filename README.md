@@ -29,13 +29,5 @@ Installation
 
 Todo
 ===
-- Separate components. Right now there is just one component for the whole page. This will allow me to optimize performance, updating only those components that need to be updated. For example, when a slide is advanced, only the current slide, new slide update, the current thumb, the new thumb, and the sidebar scroll update. THus, there should be components for:
-  - slide
-  - slide list
-  - each button
-  - buttons container
-  - sidebar
-  - slide thumbnails (rename from titles)
-  - deck thumbnails
 - More configurability
 - Make this whole thing easier to install and use.
